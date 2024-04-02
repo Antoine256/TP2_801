@@ -30,4 +30,10 @@ public class BadgeController extends GenericController<Badge>{
         BadgeCreateDTO newBadgeDTO = badgeService.createDTO(badgeDTO);
         return new ResponseEntity<>(newBadgeDTO, HttpStatus.CREATED);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<BadgeCreateDTO> updateDTO(@RequestBody BadgeCreateDTO badgeDTO){
+        BadgeCreateDTO newB = badgeService.updateDTO(badgeDTO);
+        return new ResponseEntity<>(newB, HttpStatus.OK);
+    }
 }

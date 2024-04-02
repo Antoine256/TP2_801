@@ -31,15 +31,32 @@ public class BadgeService extends GenericService<Badge>{
         Intervenant intervenant = intervenantRepository.findById(badgeCreateDTO.getOwner_id())
                 .orElseThrow(() -> new RuntimeException("Intervenant not found with id: " + badgeCreateDTO.getOwner_id()));
 
+        List<Badge> badges = intervenant.getBadges();
+
         List<Batiment> batiments = batimentRepository.findAllById(badgeCreateDTO.getBatiments());
 
         badge.setState(badgeCreateDTO.getState());
         badge.setBatiments(batiments);
         badge.setOwner(intervenant);
         Badge newBadge = badgeRepository.save(badge);
+        badges.add(newBadge);
         badgeCreateDTO.setId(newBadge.getId());
         return badgeCreateDTO;
     }
 
+    public BadgeCreateDTO updateDTO(BadgeCreateDTO badgeCreateDTO){
+        Badge badge = new Badge();
 
+        Intervenant intervenant = intervenantRepository.findById(badgeCreateDTO.getOwner_id())
+                .orElseThrow(() -> new RuntimeException("Intervenant not found with id: " + badgeCreateDTO.getOwner_id()));
+
+        List<Batiment> batiments = batimentRepository.findAllById(badgeCreateDTO.getBatiments());
+
+        badge.setId(badgeCreateDTO.getId());
+        badge.setState(badgeCreateDTO.getState());
+        badge.setBatiments(batiments);
+        badge.setOwner(intervenant);
+        badgeRepository.save(badge);
+        return badgeCreateDTO;
+    }
 }
