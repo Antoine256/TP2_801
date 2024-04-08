@@ -1,5 +1,7 @@
 package org.archilog.tp2_801.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -23,6 +26,7 @@ public class Badge implements GenericEntity<Badge>{
 
     private BadgeState state;
 
+    @JsonIgnore
     @ManyToOne
     private Intervenant owner;
 
@@ -31,5 +35,12 @@ public class Badge implements GenericEntity<Badge>{
     public void update(Badge badge) {
         this.owner = badge.owner;
         this.state = badge.state;
+    }
+
+    public Boolean canAccess(Long idBatiment){
+        for (int i = 0; i < batiments.toArray().length ; i++) {
+            if (Objects.equals(idBatiment, batiments.get(i).getId()))return true;
+        }
+        return false;
     }
 }

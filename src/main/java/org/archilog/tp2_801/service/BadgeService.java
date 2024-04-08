@@ -13,15 +13,20 @@ import java.util.List;
 
 public class BadgeService extends GenericService<Badge>{
 
-    private final BadgeRepository badgeRepository;
-    private final BatimentRepository batimentRepository;
-    private final IntervenantRepository intervenantRepository;
+    private BadgeRepository badgeRepository = null;
+    private BatimentRepository batimentRepository = null;
+    private IntervenantRepository intervenantRepository = null;
 
     public BadgeService(BadgeRepository repository, BatimentRepository batRepository, IntervenantRepository intRepository) {
         super(repository);
         this.badgeRepository= repository;
         this.intervenantRepository = intRepository;
         this.batimentRepository = batRepository;
+    }
+
+    public BadgeService(BadgeRepository badgeRepository) {
+        super(badgeRepository);
+        this.badgeRepository = badgeRepository;
     }
 
 
@@ -40,6 +45,8 @@ public class BadgeService extends GenericService<Badge>{
         badge.setOwner(intervenant);
         Badge newBadge = badgeRepository.save(badge);
         badges.add(newBadge);
+        intervenant.setBadges(badges);
+        intervenantRepository.save(intervenant);
         badgeCreateDTO.setId(newBadge.getId());
         return badgeCreateDTO;
     }
@@ -56,7 +63,13 @@ public class BadgeService extends GenericService<Badge>{
         badge.setState(badgeCreateDTO.getState());
         badge.setBatiments(batiments);
         badge.setOwner(intervenant);
+        intervenant.removeBadge(badgeCreateDTO.getId());
         badgeRepository.save(badge);
         return badgeCreateDTO;
+    }
+
+    public Boolean canAccess(Long badgeId, Long batId){
+        Badge badge = badgeRepository.findById(badgeId).orElseThrow();
+        return badge.canAccess(batId);
     }
 }

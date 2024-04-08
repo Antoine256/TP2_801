@@ -1,5 +1,6 @@
 package org.archilog.tp2_801.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Batiment implements GenericEntity<Batiment>{
 
     private Long nb_door;
 
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "badge_batiment",
             joinColumns = @JoinColumn(name = "batiment_id"),

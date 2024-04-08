@@ -23,6 +23,9 @@ public class Event implements GenericEntity<Event>{
     private Batiment batiment;
 
     @ManyToOne
+    private Badge badge;
+
+    @ManyToOne
     private Intervenant intervenant;
 
     private Date hour;
