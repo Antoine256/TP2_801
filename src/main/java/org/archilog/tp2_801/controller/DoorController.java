@@ -3,6 +3,7 @@ package org.archilog.tp2_801.controller;
 import lombok.AllArgsConstructor;
 import org.archilog.tp2_801.entity.Door;
 import org.archilog.tp2_801.repository.GenericRepository;
+import org.archilog.tp2_801.test.EntityProcessor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DoorController  extends GenericController<Door>{
 
 
-    public DoorController(GenericRepository<Door> repository) {
-        super(repository);
+    public DoorController(GenericRepository<Door> repository, EntityProcessor entityProcessor) {
+        super(repository, entityProcessor);
     }
 }

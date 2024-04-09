@@ -2,6 +2,7 @@ package org.archilog.tp2_801.controller;
 
 import org.archilog.tp2_801.entity.Intervenant;
 import org.archilog.tp2_801.repository.GenericRepository;
+import org.archilog.tp2_801.test.EntityProcessor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/api/intervenant")
 public class IntervenantController extends GenericController<Intervenant>{
-    public IntervenantController(GenericRepository<Intervenant> repository) {
-        super(repository);
+    public IntervenantController(GenericRepository<Intervenant> repository, EntityProcessor entityProcessor) {
+        super(repository, entityProcessor);
     }
 }

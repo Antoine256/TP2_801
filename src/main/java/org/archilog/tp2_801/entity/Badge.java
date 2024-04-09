@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.archilog.tp2_801.test.UseIdInsteadOfEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,8 +27,8 @@ public class Badge implements GenericEntity<Badge>{
 
     private BadgeState state;
 
-    @JsonIgnore
-    @ManyToOne
+    @UseIdInsteadOfEntity
+    @ManyToOne(fetch = FetchType.LAZY)
     private Intervenant owner;
 
 
