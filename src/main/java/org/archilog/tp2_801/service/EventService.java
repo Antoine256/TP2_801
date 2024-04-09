@@ -25,6 +25,9 @@ public class EventService extends GenericService<Event>{
     public EventService(EventRepository repository, IntervenantRepository intervenantRepository, BadgeRepository badgeRepository, BatimentRepository batimentRepository) {
         super(repository);
         this.eventRepository = repository;
+        this.batimentRepository = batimentRepository;
+        this.badgeRepository = badgeRepository;
+        this.intervenantRepository = intervenantRepository;
     }
 
     public List<Event> searchByBat(String id){
@@ -40,11 +43,11 @@ public class EventService extends GenericService<Event>{
         eventRepository.save(event);
         Badge badge = badgeRepository.findById(eventDTO.getIdBadge()).orElseThrow();
         Batiment batiment = batimentRepository.findById(eventDTO.getIdBatiment()).orElseThrow();
-        //Intervenant intervenant = intervenantRepository.findById(eventDTO.getIdIntervenant()).orElseThrow();
+        Intervenant intervenant = intervenantRepository.findById(badge.getOwner().getId()).orElseThrow();
         event.setBadge(badge);
         event.setBatiment(batiment);
         event.setHour(new Date());
-        //event.setIntervenant(intervenant);
+        event.setIntervenant(intervenant);
         event.setGoIn(eventDTO.isGoIn());
         eventRepository.save(event);
         return true;

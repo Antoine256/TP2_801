@@ -5,18 +5,20 @@ import org.archilog.tp2_801.dto.EventCreateDTO;
 import org.archilog.tp2_801.entity.Event;
 import org.archilog.tp2_801.repository.*;
 import org.archilog.tp2_801.service.EventService;
-import org.archilog.tp2_801.test.EntityProcessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@CrossOrigin
+@RequestMapping("/api/event")
 public class EventController extends GenericController<Event>{
 
     private final EventService service;
 
-    public EventController(GenericRepository<Event> repository, EntityProcessor entityProcessor, EventRepository eventRepository, BadgeRepository badgeRepository, BatimentRepository batimentRepository, IntervenantRepository intervenantRepository) {
-        super(repository, entityProcessor);
+    public EventController(GenericRepository<Event> repository, EventRepository eventRepository, BadgeRepository badgeRepository, BatimentRepository batimentRepository, IntervenantRepository intervenantRepository) {
+        super(repository);
         this.service = new EventService(eventRepository, intervenantRepository, badgeRepository, batimentRepository);
     }
 

@@ -1,6 +1,7 @@
 package org.archilog.tp2_801.service;
 
 import org.archilog.tp2_801.dto.BadgeCreateDTO;
+import org.archilog.tp2_801.dto.BadgeDTO;
 import org.archilog.tp2_801.entity.Badge;
 import org.archilog.tp2_801.entity.Batiment;
 import org.archilog.tp2_801.entity.Intervenant;
@@ -9,6 +10,7 @@ import org.archilog.tp2_801.repository.BatimentRepository;
 import org.archilog.tp2_801.repository.GenericRepository;
 import org.archilog.tp2_801.repository.IntervenantRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BadgeService extends GenericService<Badge>{
@@ -71,5 +73,21 @@ public class BadgeService extends GenericService<Badge>{
     public Boolean canAccess(Long badgeId, Long batId){
         Badge badge = badgeRepository.findById(badgeId).orElseThrow();
         return badge.canAccess(batId);
+    }
+
+    public BadgeDTO getWithLazy(Long id){
+        System.out.println("GET W LAZY");
+        Badge badge = badgeRepository.findById(id).orElseThrow();
+        BadgeDTO badgedto = new BadgeDTO(badge.getId(), badge.getBatiments(), badge.getState(), badge.getOwner());
+        return badgedto;
+    }
+
+    public List<BadgeDTO> getWithLazy(){
+        List<Badge> badges = badgeRepository.findAll();
+        List<BadgeDTO> badgeDTOList = new ArrayList<>();
+        for (Badge badge: badges){
+            badgeDTOList.add(new BadgeDTO(badge.getId(), badge.getBatiments(), badge.getState(), badge.getOwner()));
+        }
+        return badgeDTOList;
     }
 }

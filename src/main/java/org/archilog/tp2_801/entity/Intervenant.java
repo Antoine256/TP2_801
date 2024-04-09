@@ -1,6 +1,7 @@
 package org.archilog.tp2_801.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,9 @@ public class Intervenant implements GenericEntity<Intervenant>{
     private String lastname;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    @JsonManagedReference
     private List<Badge> badges;
 
 
