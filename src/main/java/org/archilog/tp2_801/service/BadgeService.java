@@ -12,6 +12,7 @@ import org.archilog.tp2_801.repository.IntervenantRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BadgeService extends GenericService<Badge>{
 
@@ -54,18 +55,15 @@ public class BadgeService extends GenericService<Badge>{
     }
 
     public BadgeCreateDTO updateDTO(BadgeCreateDTO badgeCreateDTO){
-        Badge badge = new Badge();
-
+        Badge badge = badgeRepository.findById(badgeCreateDTO.getId()).orElseThrow();
         Intervenant intervenant = intervenantRepository.findById(badgeCreateDTO.getOwner_id())
                 .orElseThrow(() -> new RuntimeException("Intervenant not found with id: " + badgeCreateDTO.getOwner_id()));
 
         List<Batiment> batiments = batimentRepository.findAllById(badgeCreateDTO.getBatiments());
-
         badge.setId(badgeCreateDTO.getId());
         badge.setState(badgeCreateDTO.getState());
-        badge.setBatiments(batiments);
         badge.setOwner(intervenant);
-        intervenant.removeBadge(badgeCreateDTO.getId());
+        badge.setBatiments(batiments);
         badgeRepository.save(badge);
         return badgeCreateDTO;
     }

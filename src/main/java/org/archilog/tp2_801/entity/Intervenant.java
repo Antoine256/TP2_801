@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -34,10 +32,5 @@ public class Intervenant implements GenericEntity<Intervenant>{
     public void update(Intervenant intervenant) {
         this.firstname = intervenant.firstname;
         this.lastname = intervenant.lastname;
-    }
-
-    public void removeBadge(Long idBadge){
-        Optional<Badge> b = badges.stream().filter(badge -> badge.getId() == idBadge).findFirst();
-        if (b.isPresent()) badges.remove(b);
     }
 }
